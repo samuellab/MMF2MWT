@@ -10,6 +10,8 @@
       <in>MWT_Geometry.h</in>
       <in>MWT_Image.cc</in>
       <in>MWT_Image.h</in>
+      <in>MWT_Image_CV.cpp</in>
+      <in>MWT_Image_CV.h</in>
       <in>MWT_Library.cc</in>
       <in>MWT_Library.h</in>
       <in>MWT_Lists.cc</in>
