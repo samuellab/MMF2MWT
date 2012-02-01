@@ -3,18 +3,19 @@
     <type>org.netbeans.modules.cnd.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>DLL</name>
+            <name>MWTMMF</name>
             <make-project-type>0</make-project-type>
             <c-extensions/>
-            <cpp-extensions>cc</cpp-extensions>
+            <cpp-extensions>cc,cpp</cpp-extensions>
             <header-extensions>h</header-extensions>
             <sourceEncoding>UTF-8</sourceEncoding>
-            <make-dep-projects/>
-            <sourceRootList>
-                <sourceRootElem>.</sourceRootElem>
-            </sourceRootList>
+            <make-dep-projects>
+                <make-dep-project>../Image-Stack-Compressor</make-dep-project>
+            </make-dep-projects>
+            <sourceRootList/>
             <confList>
-                <confElem>Default</confElem>
+                <confElem>Debug</confElem>
+                <confElem>Release</confElem>
             </confList>
         </data>
     </configuration>

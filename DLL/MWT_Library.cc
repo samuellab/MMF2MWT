@@ -10,7 +10,7 @@
  
 #include <math.h>
 #include <stdio.h>
-
+#include <iostream>
 #include <new>
 
 #include "MWT_Library.h"
@@ -622,6 +622,7 @@ int TrackerLibrary::setObjectIntensityThresholds(int handle,int intensity_to_fil
   if (intensity_to_fill == gray || intensity_of_new==gray) return 0;
   else if (intensity_to_fill > gray) // Bright blob
   {
+    std::cout << "bright blob!" << std::endl;
     if (intensity_of_new < gray) return 0;
     if (intensity_of_new > white) intensity_of_new = white;
     if (intensity_of_new < intensity_to_fill) intensity_to_fill = intensity_of_new;
@@ -631,6 +632,7 @@ int TrackerLibrary::setObjectIntensityThresholds(int handle,int intensity_to_fil
   }
   else // Standard dark blob
   {
+    std::cout << "dark blob!" << std::endl;
     if (intensity_of_new > gray) return 0;
     if (intensity_of_new < 1) intensity_of_new = 1;
     if (intensity_of_new > intensity_to_fill) intensity_to_fill = intensity_of_new;
@@ -728,8 +730,9 @@ int TrackerLibrary::showObjects(int handle,Image& im)
   short other = 0;
   if (te->performance.blob_is_dark) color = (1<<te->image_bits)-1;
   else other = (1<<te->image_bits)-1;
-  te->performance.imprint(&im , 0 , 3 , (1<<te->image_bits)-1 , 2 , color , true , 0 , false , other , 2);  
-  
+//  te->performance.imprint(&im , 0 , 3 , (1<<te->image_bits)-1 , 2 , color , true , 0 , false , other , 2);
+    te->performance.imprint(&im , 0 , 3 , (1<<te->image_bits)-1 , 2 , color , true , 0 , false , other , 2);
+
   return handle;
 }
 
