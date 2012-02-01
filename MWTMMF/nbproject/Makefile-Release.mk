@@ -37,6 +37,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/1360890869/MWT_Blob.o \
 	${OBJECTDIR}/_ext/1360890869/MWT_Model.o \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/MMF_MWT_Processor.o \
 	${OBJECTDIR}/_ext/1360890869/MWT_Geometry.o \
 	${OBJECTDIR}/_ext/1360890869/MWT_Image.o \
 	${OBJECTDIR}/_ext/1360890869/MWT_DLL.o \
@@ -88,6 +89,11 @@ ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/MMF_MWT_Processor.o: MMF_MWT_Processor.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/MMF_MWT_Processor.o MMF_MWT_Processor.cpp
 
 ${OBJECTDIR}/_ext/1360890869/MWT_Geometry.o: ../DLL/MWT_Geometry.cc 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1360890869

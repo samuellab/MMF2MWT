@@ -28,6 +28,8 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>MMF_MWT_Processor.cpp</itemPath>
+    <itemPath>MMF_MWT_Processor.h</itemPath>
     <itemPath>../DLL/MWT_Blob.cc</itemPath>
     <itemPath>../DLL/MWT_Blob.h</itemPath>
     <itemPath>../DLL/MWT_DLL.cc</itemPath>

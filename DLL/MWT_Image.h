@@ -11,9 +11,6 @@
 #ifndef MWT_IMAGE
 #define MWT_IMAGE
 
-#ifndef USE_OPENCV
-#define USE_OPENCV 1
-#endif
 
 #include <limits.h>
 #include <stdio.h>

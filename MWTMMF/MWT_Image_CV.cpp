@@ -6,6 +6,7 @@
  */
 #include <iostream>
 #include "MWT_Image_CV.h"
+#include "cv.h"
 using namespace std;
 //IplImage *MWT_Image_CV::createImageHeaderForMWTImage(const Image& im) {
 //    IplImage *hdr = cvCreateImageHeader(cvSize(im.size.x, im.size.y), IPL_DEPTH_16S, 1);

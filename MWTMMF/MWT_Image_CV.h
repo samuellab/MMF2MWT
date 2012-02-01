@@ -5,8 +5,10 @@
  * Created on January 30, 2012, 2:13 PM
  */
 
+#include "MWT_Geometry.h"
 #include "MWT_Image.h"
-#include "cv.h"
+#include "cxtypes.h"
+
 #ifndef MWT_IMAGE_CV_H
 #define	MWT_IMAGE_CV_H
 
