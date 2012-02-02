@@ -63,10 +63,12 @@
             <pElem>../DLL</pElem>
             <pElem>../Image-Stack-Compressor</pElem>
             <pElem>../Image-Stack-Compressor/Necessary Libraries and Includes/CV/headers</pElem>
+            <pElem>../yaml-cpp/include/</pElem>
           </incDir>
           <commandLine>-DWINDOWS -DBUILD_DLL</commandLine>
         </ccTool>
         <linkerTool>
+          <output>./mwt2mmf</output>
           <linkerAddLib>
             <pElem>../Image-Stack-Compressor/Necessary Libraries and Includes/CV/lib</pElem>
           </linkerAddLib>
@@ -86,6 +88,18 @@
             <linkerLibLibItem>cv</linkerLibLibItem>
             <linkerLibLibItem>cxcore</linkerLibLibItem>
             <linkerLibLibItem>highgui</linkerLibLibItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../yaml-cpp"
+                            CT="3"
+                            CN="Debug"
+                            AC="true"
+                            BL="false"
+                            WD="../yaml-cpp"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="./libyaml-cpp.lib">
+              </makeArtifact>
+            </linkerLibProjectItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>

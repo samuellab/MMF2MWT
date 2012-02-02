@@ -13,26 +13,142 @@
 #include "StackReader.h"
 #include "highgui.h"
 #include "tictoc/tictoc.h"
+
 using namespace std;
 
 /*
  * 
  */
+
+struct ParamsT{
+    bool valid;
+    string mmfname;
+    string outpath;
+    string outname;
+    string batchname;
+};
+
 int testLibraryMMF (void);
 int testCVConversion (void);
 int testMMF_MWT_Processor (void);
+void properUsage (const char *argv);
+int parseArguments (int argc, char **argv, ParamsT &p) ;
+int runProgram (int argc, char **argv);
+void badargs (ParamsT &p, int argc, char **argv);
+
+#define defaultSettingsFile "defaultMWTSettings.txt"
+#define programName "mwt2mmf"
 int main(int argc, char** argv) {
 
+    
+    return runProgram(argc, argv);
     //return testCVConversion();
-    return testMMF_MWT_Processor();
+    //return testMMF_MWT_Processor();
   //  return  testLibraryMMF();
+}
+int runProgram (int argc, char **argv) {
+    ParamsT p;
+    int rv;
+    if ((rv = parseArguments(argc, argv, p)) || !p.valid) {
+        return rv;
+    }
+    MMF_MWT_Processor mp;
+    bool defaultbatch;
+    if (p.batchname.empty()) {
+        p.batchname = string(defaultSettingsFile);
+    }
+    ifstream ifs(p.batchname.c_str());
+    if (!ifs.good()) {
+        ifs.close();
+        if (defaultbatch) {
+            ofstream os(defaultSettingsFile);
+            os << mp;
+        } else {
+            cout << "batch file not found" << endl;
+            badargs(p, argc, argv);
+            return 1;
+        }
+    } else {
+        ifs >> mp;
+    }
+    if (rv = mp.process(p.mmfname.c_str(), p.outpath.empty() ? NULL : p.outpath.c_str(), p.outname.empty() ? NULL : p.outname.c_str())) {
+        cout << "processing failed with return value: " << rv << endl;
+        badargs(p, argc, argv);
+        return rv;
+    }
+    return rv;
+}
+void badargs (ParamsT &p, int argc, char **argv) {
+    cout << "Your command: ";
+    for (int j = 0; j < argc; ++j) {
+        cout << argv[j] << " ";
+    }
+    cout << endl << "was interpreted as " << endl;
+    cout << "mmf name (with path): " << (p.mmfname.empty() ? "empty" : p.mmfname) << endl;
+    cout << "batch file name (with path): " << (p.batchname.empty() ? defaultSettingsFile: p.batchname) << endl;
+    cout << "output path: " << (p.outpath.empty() ? "empty" : p.outpath) << endl;
+    cout << "output prefix: " << (p.outname.empty() ? "empty" : p.outname) << endl;
+    return;
+}
+int parseArguments (int argc, char **argv, ParamsT &p) {
+    p.valid = false;
+    switch (argc) {
+        case 0:
+            cout << "argc = 0; this should never happen!";
+            properUsage(programName);
+            return 1;
+        case 5:
+            p.outname = string(argv[4]);
+        case 4:
+            p.outpath = string(argv[3]);
+        case 3:            
+            p.batchname = string(argv[2]);
+        case 2:
+            p.mmfname = string(argv[1]);
+            p.valid = true;
+            return 0;
+            break;
+        case 1:
+            properUsage(programName);
+            return 0;
+            break;
+        default:
+            properUsage(programName);
+            return 1;
+            break;
+    }
+    return 1;
+}
+void properUsage (const char *argv) {
+    cout << argv << " imagestack.mmf :" << endl << "runs MWT on imagestack.mmf using settings defined in: " << defaultSettingsFile << endl;
+    cout << "outputpath and prefix are determined by path and name of imagestack" << endl;
+    cout << "data is stored in pathToMMF/datestring/stackname.blobs etc." << endl;
+    cout << "--------------" << endl;
+    cout << argv << " imagestack.mmf settingsFile.txt :" << endl << "runs MWT on imagestack.mmf using settings defined in settingsFile.txt" << endl;
+    cout << "outputpath and prefix are determined by path and name of imagestack" << endl;
+    cout << "data is stored in pathToMMF/datestring/stackname.blobs etc." << endl;
+    cout << "--------------" << endl;
+    cout << argv << " imagestack.mmf settingsFile.txt pathToOutput" << endl << "runs MWT on imagestack.mmf using settings defined in settingsFile.txt" << endl;
+    cout << "data is stored in pathToOutput/datestring/stackname.blobs etc." << endl;
+    cout << "--------------" << endl;
+    cout << argv << " imagestack.mmf settingsFile.txt pathToOutput outputPrefix" << endl << "runs MWT on imagestack.mmf using settings defined in settingsFile.txt" << endl;
+    cout << "data is stored in pathToOutput/datestring/outputPrefix.blobs etc." << endl;
+    cout << "--------------" << endl;
+    cout << endl << endl << "other parsing options available if someone wants to write them" <<endl;
 }
 
 int testMMF_MWT_Processor(void) {
     MMF_MWT_Processor p;
-    p.windowOutputUpdateInterval = 30;
-    p.endFrame = 1000;
-    p.writeLog = false;
+    ifstream ifs(defaultSettingsFile);
+    if (!ifs.good()) {
+        ofstream ofs(defaultSettingsFile);
+        ofs << p;
+        return 0;
+    } else {
+        ifs >> p;
+    }
+
+//    p.windowOutputUpdateInterval = 30;
     return p.process("E:\\from Bruno - photo from Janelia\\20120113 - w1118 temporal run\\20120113 - w1118 temporal run\\2128\\w1118@UAS_TNT_2_0003@t8@l_10A_50s6x50s50s#n#n#n@30.mmf");
 }
 

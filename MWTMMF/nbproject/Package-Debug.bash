@@ -11,8 +11,8 @@ CND_CONF=Debug
 CND_DISTDIR=dist
 NBTMPDIR=build/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/mwtmmf
-OUTPUT_BASENAME=mwtmmf
+OUTPUT_PATH=./mwt2mmf
+OUTPUT_BASENAME=mwt2mmf
 PACKAGE_TOP_DIR=mwtmmf/
 
 # Functions

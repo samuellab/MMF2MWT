@@ -16,8 +16,16 @@
 #include "MMF_MWT_Processor.h"
 #include "highgui.h"
 #include "cv.h"
-
+#include "yaml-cpp/yaml.h"
 using namespace std;
+
+#ifndef readYamlKey
+    #define readYamlKey(node, value) if ((node).FindValue(#value) != NULL) { (node)[#value] >> value; }
+#endif
+#ifndef writeYamlKey
+    #define writeYamlKey(out, value) (out) << YAML::Key << #value << YAML::Value << value;
+#endif
+
 
 int MMF_MWT_Processor::process(const char* mmf_filename, const char* output_path, const char* output_prefix){
   TrackerLibrary a_library;
@@ -47,6 +55,8 @@ int MMF_MWT_Processor::process(const char* mmf_filename, const char* output_path
 
   a_library.setSubtractionImageCorrectionAlgorithm(h1);
   a_library.setCombineBlobs(h1,true);
+
+  logstream << "processing " << mmf_filename << endl << "with these settings: " << endl << *this << endl;
 
   StackReader sr(mmf_filename);
   if (sr.isError()) {
@@ -195,3 +205,102 @@ MMF_MWT_Processor::MMF_MWT_Processor(const MMF_MWT_Processor& orig) {
 MMF_MWT_Processor::~MMF_MWT_Processor() {
 }
 
+YAML::Emitter& MMF_MWT_Processor::toYaml(YAML::Emitter& out) const {
+    out << YAML::BeginMap;
+    yamlBody(out);
+    out << YAML::EndMap;
+    return out;
+}
+
+YAML::Emitter& MMF_MWT_Processor::yamlBody(YAML::Emitter& out) const {
+
+    
+    writeYamlKey(out, frame_rate);
+
+    writeYamlKey(out, thresholdToFillObject);
+    writeYamlKey(out, thresholdToMarkObject);
+
+    writeYamlKey(out, minObjectArea);
+    writeYamlKey(out, minNewObjectArea);
+    writeYamlKey(out, maxNewObjectArea);
+    writeYamlKey(out, maxObjectArea);
+
+    writeYamlKey(out, startFrame);
+    writeYamlKey(out, endFrame);
+    writeYamlKey(out, adpatationAlpha);
+
+    writeYamlKey(out, dancerBorderSize);
+    writeYamlKey(out, minFramesObjectMustPersist);
+    writeYamlKey(out, updateBandNumber);
+    writeYamlKey(out, windowOutputUpdateInterval);
+    writeYamlKey(out, writeLog);
+    
+    /*
+    out << YAML::Key << "frame_rate" << YAML::Value << frame_rate;
+
+    out << YAML::Key << "thresholdToFillObject" << YAML::Value << thresholdToFillObject;
+    out << YAML::Key << "thresholdToMarkObject" << YAML::Value << thresholdToMarkObject;
+
+    out << YAML::Key << "minObjectArea" << YAML::Value << minObjectArea;
+    out << YAML::Key << "minNewObjectArea" << YAML::Value << minNewObjectArea;
+    out << YAML::Key << "maxNewObjectArea" << YAML::Value << maxNewObjectArea;
+    out << YAML::Key << "maxObjectArea" << YAML::Value << maxObjectArea;
+
+    out << YAML::Key << "startFrame" << YAML::Value << startFrame;
+    out << YAML::Key << "endFrame" << YAML::Value << endFrame;
+
+    out << YAML::Key << "adpatationAlpha" << YAML::Value << adpatationAlpha;
+    out << YAML::Key << "dancerBorderSize" << YAML::Value << dancerBorderSize;
+    out << YAML::Key << "minFramesObjectMustPersist" << YAML::Value << minFramesObjectMustPersist;
+    out << YAML::Key << "updateBandNumber" << YAML::Value << updateBandNumber;
+
+    out << YAML::Key << "windowOutputUpdateInterval" << YAML::Value << windowOutputUpdateInterval;
+    out << YAML::Key << "writeLog" << YAML::Value << writeLog;
+*/
+
+    return out;
+}
+
+void MMF_MWT_Processor::fromYaml(const YAML::Node& node) {
+    
+    readYamlKey(node, frame_rate);
+
+    readYamlKey(node, thresholdToFillObject);
+    readYamlKey(node, thresholdToMarkObject);
+
+    readYamlKey(node, minObjectArea);
+    readYamlKey(node, minNewObjectArea);
+    readYamlKey(node, maxNewObjectArea);
+    readYamlKey(node, maxObjectArea);
+
+    readYamlKey(node, startFrame);
+    readYamlKey(node, endFrame);
+    readYamlKey(node, adpatationAlpha);
+
+    readYamlKey(node, dancerBorderSize);
+    readYamlKey(node, minFramesObjectMustPersist);
+    readYamlKey(node, updateBandNumber);
+    readYamlKey(node, windowOutputUpdateInterval);
+    readYamlKey(node, writeLog);
+     
+}
+
+YAML::Emitter& operator << (YAML::Emitter& out, const MMF_MWT_Processor &mp) {
+    return mp.toYaml(out);
+}
+void operator >> (const YAML::Node &node, MMF_MWT_Processor &mp) {
+    mp.fromYaml(node);
+}
+std::ostream& operator << (std::ostream &out, const MMF_MWT_Processor &mp) {
+    YAML::Emitter yout;
+    yout << mp;
+    out << yout.c_str();
+    return out;
+}
+std::istream& operator >> (std::istream &in, MMF_MWT_Processor &mp) {
+    YAML::Parser parser (in);
+    YAML::Node doc;
+    parser.GetNextDocument(doc);
+    mp.fromYaml(doc);
+    return in;
+}
