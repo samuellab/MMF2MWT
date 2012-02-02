@@ -20,6 +20,7 @@ public:
     int windowOutputUpdateInterval;
     int startFrame;
     int endFrame;
+    bool writeLog;
 
     int adpatationAlpha;
     int updateBandNumber;
@@ -49,6 +50,7 @@ public:
         windowOutputUpdateInterval = -1;
         startFrame = 0;
         endFrame = -1;
+        writeLog = false;
     }
 
 private:

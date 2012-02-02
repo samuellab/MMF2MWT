@@ -24,7 +24,27 @@ int MMF_MWT_Processor::process(const char* mmf_filename, const char* output_path
   int i;
   int h1 = a_library.getNewHandle();
 
-  ostream& logstream = cout;
+  
+  string outpath(mmf_filename);
+  size_t ind = outpath.find_last_of("/\\");
+  string outname = outpath.substr(ind+1);
+  outpath = outpath.substr(0,ind + 1);
+
+  ind = outname.find_last_of('.');
+  outname = outname.substr(0,ind);
+
+ 
+  string fname = ((output_path == NULL) ? outpath : string(output_path)) +  ((output_prefix == NULL) ? outname : string(output_prefix)) + ".mwtlog";
+  ofstream *outstream = NULL;
+  if (writeLog) {
+      outstream = new ofstream(fname.c_str());
+      if (!outstream->good()) {
+          delete outstream;
+          outstream = NULL;
+      }
+  }
+  ostream& logstream = (outstream == NULL) ? cout : *outstream;
+
   a_library.setSubtractionImageCorrectionAlgorithm(h1);
   a_library.setCombineBlobs(h1,true);
 
@@ -47,13 +67,6 @@ int MMF_MWT_Processor::process(const char* mmf_filename, const char* output_path
 
   //i = a_library.setDate(h1,2007,12,26,10,50,33); if (i!=h1) return 4;
 
-  string outpath(mmf_filename);
-  size_t ind = outpath.find_last_of("/\\");
-  string outname = outpath.substr(ind+1);
-  outpath = outpath.substr(0,ind + 1);
-
-  ind = outname.find_last_of('.');
-  outname = outname.substr(0,ind);
     
   i = a_library.setOutput(h1,output_path == NULL ? outpath.c_str() : output_path, output_prefix == NULL ? outname.c_str() : output_prefix,true,false,false); if (i!=h1) return 4;
 
@@ -165,6 +178,10 @@ int MMF_MWT_Processor::process(const char* mmf_filename, const char* output_path
   logstream << tim.generateReport() << endl;
 
   i = a_library.complete(h1); if (i!=h1) return 50;
+
+  if (outstream != NULL) {
+      delete(outstream);
+  }
 
   return 0;
 }
