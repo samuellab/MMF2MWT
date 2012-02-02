@@ -23,8 +23,8 @@ int testCVConversion (void);
 int testMMF_MWT_Processor (void);
 int main(int argc, char** argv) {
 
-    return testCVConversion();
-    //return testMMF_MWT_Processor();
+    //return testCVConversion();
+    return testMMF_MWT_Processor();
   //  return  testLibraryMMF();
 }
 
@@ -32,7 +32,7 @@ int testMMF_MWT_Processor(void) {
     MMF_MWT_Processor p;
     p.windowOutputUpdateInterval = 30;
     p.endFrame = 1000;
-    p.writeLog = true;
+    p.writeLog = false;
     return p.process("E:\\from Bruno - photo from Janelia\\20120113 - w1118 temporal run\\20120113 - w1118 temporal run\\2128\\w1118@UAS_TNT_2_0003@t8@l_10A_50s6x50s50s#n#n#n@30.mmf");
 }
 

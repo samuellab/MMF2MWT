@@ -8,31 +8,24 @@
 #include "MWT_Image_CV.h"
 #include "cv.h"
 using namespace std;
-//IplImage *MWT_Image_CV::createImageHeaderForMWTImage(const Image& im) {
-//    IplImage *hdr = cvCreateImageHeader(cvSize(im.size.x, im.size.y), IPL_DEPTH_16S, 1);
-//    if (hdr == NULL) {
-//        return hdr;
-//    }
-//    hdr->widthStep = hdr->width*sizeof(short);
-//    cvSetData(hdr, im.pixels, hdr->widthStep);
-//    CvRect roi = cvRect(im.bounds.near.x, im.bounds.near.y, im.bounds.width(), im.bounds.height());
-//    cvSetImageROI(hdr, roi);
-//    return hdr;
-//}
+//note that because MWT_Image stores data is column ordered format & IplImage stores data
+//in row order, the IplImage header represents the transpose of the MWT Image
+IplImage *MWT_Image_CV::createImageHeaderForMWTImage(const Image& im) {
+    IplImage *hdr = cvCreateImageHeader(cvSize(im.size.y, im.size.x), IPL_DEPTH_16S, 1);
+    if (hdr == NULL) {
+        return hdr;
+    }
+    hdr->widthStep = hdr->width*sizeof(short);
+    cvSetData(hdr, im.pixels, hdr->widthStep);
+    CvRect roi = cvRect(im.bounds.near.y, im.bounds.near.x, im.bounds.height(), im.bounds.width());
+    cvSetImageROI(hdr, roi);
+    return hdr;
+}
 
 Image MWT_Image_CV::IplImageToMWTImage(const IplImage* src) {
 
     return MWT_Image_CV(src);
-//    Image im(Point(src->width, src->height), false);
-  //  im.bin = 1;
-   // IplImage *tmp = createImageHeaderForMWTImage(im);
-   // cvConvert(src, tmp);
-    // CvRect roi = cvGetImageROI(src);
-   
-//    im.bounds = cvRectangleToMWTRectangle(roi);
-   // cout << "im.bounds.near = " << im.bounds.near.x << " , " << im.bounds.near.y << " im.bounds.far = " << im.bounds.far.x << " , " << im.bounds.far.y << endl;
-  //  cvReleaseImageHeader(&tmp);
-   // return im;
+
 }
 
 
@@ -42,8 +35,6 @@ IplImage *MWT_Image_CV::toIplImage(IplImage** dst) const {
 
 IplImage *MWT_Image_CV::MWTImagetoIplImage(const Image& src, IplImage** dst) {
     IplImage *dstim;
-//    IplImage *srcim = createImageHeaderForMWTImage(src);
-  //  CvRect roi = cvGetImageROI(srcim);
 
     //verify that destination image, if it exists, has proper size and depth
     Rectangle r = src.getBounds();
@@ -60,12 +51,9 @@ IplImage *MWT_Image_CV::MWTImagetoIplImage(const Image& src, IplImage** dst) {
         dstim = *dst;
     }
 
-    for (int j = 0; j < r.height(); ++j) {
-        short *ptr = (short *) (dstim->imageData + j*dstim->widthStep);
-        for (int i = 0; i < r.width(); ++i) {
-            ptr[i] = src.get(i+r.near.x,j+r.near.y);
-        }
-    }
+    IplImage *srchdr = createImageHeaderForMWTImage(src);
+    cvTranspose(srchdr, dstim);
+    cvReleaseImageHeader(&srchdr);
 
     if (dst != NULL) {
         *dst = dstim;
@@ -112,33 +100,6 @@ IplImage *MWT_Image_CV::toIplImage8U(IplImage** dst, bool scaleToRange) const {
     return MWTImagetoIplImage8U(*this, dst, scaleToRange);
 }
 
-/*
- IplImage *MWT_Image_CV::MWTImagetoIplImage(const Image& src, IplImage** dst) {
-    IplImage *dstim;
-    IplImage *srcim = createImageHeaderForMWTImage(src);
-    CvRect roi = cvGetImageROI(srcim);
-
-    //verify that destination image, if it exists, has proper size and depth
-    if (dst != NULL && *dst != NULL){
-        if ((*dst)->width != roi.width || (*dst)->height != roi.height || (*dst)->depth != IPL_DEPTH_16S || (*dst)->nChannels != 1) {
-            cvReleaseImage(dst);
-        }
-    }
-    if (dst == NULL || *dst == NULL) {
-        dstim = cvCreateImage(cvSize(roi.width, roi.height), IPL_DEPTH_16S, 1);
-    } else {
-        dstim = *dst;
-    }
-    cvCopyImage(srcim, dstim);
-    cvReleaseImageHeader(&srcim);
-    if (dst != NULL) {
-        *dst = dstim;
-    }
-
-
-}
-
- */
 void MWT_Image_CV::setImageDataFromIplImage(const IplImage* src) {
     if (src == NULL) {
         return;
@@ -157,17 +118,10 @@ void MWT_Image_CV::setImageDataFromIplImage(const IplImage* src) {
         cvConvert(src, temp);
         src = temp;
     }
+    IplImage *hdr = createImageHeaderForMWTImage(*this);
+    cvTranspose(src, hdr);
+    cvReleaseImageHeader(&hdr);
 
-
-    CvRect roi = cvGetImageROI(src);
-    for (int j = 0; j < size.y; ++j) {
-        int y = roi.y + j;
-        short *ptr = (short *) (src->imageData + y*src->widthStep);
-        for (int i = 0; i < size.x; ++i) {
-            int x = roi.x + i;    
-            set(i,j, ptr[x]);
-        }
-    }
     if (temp != NULL) {
         cvReleaseImage(&temp);
     }

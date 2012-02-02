@@ -145,6 +145,7 @@ int MMF_MWT_Processor::process(const char* mmf_filename, const char* output_path
       int nobj = a_library.processImage(h1);      
       tim.toc("mwt processing");
 
+      tim.tic("image display and output");
       if (windowOutputUpdateInterval > 0 && (j%windowOutputUpdateInterval == 0)) {
           bool scaleToRange = true;
           im.set(im.bounds, 0);
@@ -171,6 +172,7 @@ int MMF_MWT_Processor::process(const char* mmf_filename, const char* output_path
           logstream << "frame " << j << " , " << nobj << " objs found " << tim.getStatistics("loop")*1000 << " ms average processing time" << endl;
 
       }
+      tim.toc("image display and output");
 //      
 
       tim.toc("loop");

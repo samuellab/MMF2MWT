@@ -28,13 +28,12 @@ public:
      * no scaling is done in the conversion
      * the bit depth of the image is set to 16
      *
-     * if src->roi is not NULL, only the area within src->roi is copied (same behavior as cvConvertScale) 
+     * if src->roi is not NULL, only the area within src->roi is copied 
      */
     MWT_Image_CV(const IplImage *src) :
     Image(sizeOfIplImageOrROI(src), false) {
         setImageDataFromIplImage(src);
         setBitDepthFromIplImage(src);
-        bin = 0;
     }
 
     /* Image IplImageToMWTImage(IplImage *src);
@@ -47,12 +46,12 @@ public:
      *
      * if src has bit depth IPL_DEPTH_16U, IPL_DEPTH_16S, IPL_DEPTH_32F, IPL_DEPTH_32S, IPL_DEPTH_64F
      * no scaling is done in the conversion
-     * the bit depth of the image is set to 16
+     * the bit depth of the image is set to 8
      *
-     * src->roi is ignored (same behavior as cvConvertScale) when copying the data
-     * but Image.bounds is set to src->roi
+     * if src->roi is not NULL, only the area within src->roi is copied 
      */
     static Image IplImageToMWTImage(const IplImage *src);
+
 
     /* IplImage *toIplImage(IplImage **dst = NULL);
      * static IplImage *MWTImagetoIplImage(const Image &src, IplImage **dst = NULL);
@@ -67,11 +66,21 @@ public:
      *
      * the return value is a pointer to the new image
      *
-     * only the area within image.bounds is copied
+     * the entire image is copied; the destination roi is set to im.bounds;
      */
     static IplImage *MWTImagetoIplImage(const Image &src, IplImage **dst = NULL);
     IplImage *toIplImage(IplImage **dst = NULL) const;
-    
+
+    /*  IplImage *toIplImage8U(IplImage **dst = NULL, bool scaleToRange = false) const;
+     *  static IplImage *MWTImagetoIplImage8U(const Image &src, IplImage **dst = NULL, bool scaleToRange = false);
+     *
+     *  convert an MWT image to an 8-bit IPL image;
+     *    if scaleToRange is true,
+     *       the smallest value in src becomes 0 in dst and the largest becomes 255
+     *    if scaleToRange is false,
+     *       dstvalue = srcvalue << (src.depth - 8) - 128
+     *     
+     */
     IplImage *toIplImage8U(IplImage **dst = NULL, bool scaleToRange = false) const;
     static IplImage *MWTImagetoIplImage8U(const Image &src, IplImage **dst = NULL, bool scaleToRange = false);
 
@@ -84,8 +93,7 @@ public:
      * we delete pixels (if this image owns_pixels), then create new
      * memory of the appropriate size
      *
-     * we set the image size to be that of the src image
-     * we set image bounds to match src->roi
+     * if src->roi is not NULL, only the area within src->roi is copied
      *
      * we do not adjust image bit depth
      */
@@ -93,7 +101,7 @@ public:
     void setBitDepthFromIplImage (const IplImage *src);
 
 protected:
- //   static IplImage *createImageHeaderForMWTImage(const Image &im);
+    static IplImage *createImageHeaderForMWTImage(const Image &im); //note that image is transposed 
     static Rectangle cvRectangleToMWTRectangle (const CvRect& cvr);
     static CvRect mwtRectangleToCvRectangle (const Rectangle& r);
     static Point sizeOfIplImageOrROI (const IplImage *src);
