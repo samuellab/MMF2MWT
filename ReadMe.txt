@@ -12,9 +12,54 @@ defaultMWTSettings.txt, which is produced when the program is run for the first 
 
 other options can be found by running mmf2mwt with no arguments
 
+-----
+explanation of settings:
+these are the default settings, with explanation
 
-getting the code
+
+frame_rate: 30 
+	mmf was recorded at 30 frames per second
+
+thresholdToFillObject: 50 
+	blobs are filled out to this threshold level (gray levels above background) 
+
+thresholdToMarkObject: 70
+	blobs must contain pixels above thresholdToMarkObject to be marked 
+
+minObjectArea: 10
+minNewObjectArea: 30
+maxNewObjectArea: 20000
+maxObjectArea: 30000
+
+	new blobs must be between 30 and 20,000 pixels in area.  To avoid dissapearing, a blob must maintain its area between 10 and 30,000 pixels
+
+startFrame: 0
+endFrame: -1
+
+	mmf frame to start analysis (default 0: )
+     mmf frame to end analysis (if <0, process all frames)
+
+adpatationAlpha: 8
+dancerBorderSize: 10
+minFramesObjectMustPersist: 60
+updateBandNumber: 16
+
+	mwt settings you will probably not need to adjust.  
+	each frame contributes 2^(-adaptationAlpha) towards updating the background.  
+	ask Rex about dancerBorderSize.  
+	we don't write out objects that lasted less than minFramesObjectMustPersist.  
+	ask Rex about updateBandNumber
+
+windowOutputUpdateInterval: -1
+writeLog: false
+
+	If windowOutputUpdateInterval > 0, we show a window with the current state of the MWT every windowOutputUpdateInterval frames.  The red and green channels are the original image from the MMF; the blue channel is the output of the MWT showObjects function.  Untracked objects will appear yellow.  This operation takes about 5 times as long as all the other operations put together, so set windowOutputUpdate to a larger number (e.g. 30) if you plan to use it.
+
+	if writeLog is true, we dump some text output containing diagnostic information to outputpath/outputprefix.mwtlog
+otherwise, we dump it to cout
+
 ------
+getting the code
 This code comes as a git module with submodules.  One of the submodules also has a submodule.  
 
 To get all of the code, using the git shell:
