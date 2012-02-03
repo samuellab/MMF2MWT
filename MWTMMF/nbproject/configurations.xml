@@ -65,7 +65,7 @@
             <pElem>../Image-Stack-Compressor/Necessary Libraries and Includes/CV/headers</pElem>
             <pElem>../yaml-cpp/include/</pElem>
           </incDir>
-          <commandLine>-DWINDOWS -DBUILD_DLL</commandLine>
+          <commandLine>-DWINDOWS -static-libgcc -static-libstdc++</commandLine>
         </ccTool>
         <linkerTool>
           <output>./mwt2mmf</output>
@@ -101,6 +101,7 @@
               </makeArtifact>
             </linkerLibProjectItem>
           </linkerLibItems>
+          <commandLine>-static-libgcc -static-libstdc++</commandLine>
         </linkerTool>
       </compileType>
     </conf>

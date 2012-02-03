@@ -3,6 +3,10 @@
  * Author: Marc
  *
  * Created on January 30, 2012, 4:54 PM
+ * (C) Marc Gershow; licensed under the Creative Commons Attribution Share Alike 3.0 United States License.
+ * To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/us/ or send a letter to
+ * Creative Commons, 171 Second Street, Suite 300, San Francisco, California, 94105, USA.
+
  */
 
 #include <cstdlib>
@@ -108,10 +112,18 @@ int parseArguments (int argc, char **argv, ParamsT &p) {
             p.valid = true;
             return 0;
             break;
-        case 1:
+        case 1: {
             properUsage(programName);
+            ifstream ifs(defaultSettingsFile);
+            if (!ifs.good()) {
+                ifs.close();
+                ofstream os(defaultSettingsFile);
+                MMF_MWT_Processor mp;
+                os << mp;
+            }
             return 0;
             break;
+        }
         default:
             properUsage(programName);
             return 1;

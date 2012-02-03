@@ -50,8 +50,8 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=-DWINDOWS -DBUILD_DLL
-CXXFLAGS=-DWINDOWS -DBUILD_DLL
+CCFLAGS=-DWINDOWS -static-libgcc -static-libstdc++
+CXXFLAGS=-DWINDOWS -static-libgcc -static-libstdc++
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -72,7 +72,7 @@ LDLIBSOPTIONS=-L../Image-Stack-Compressor/Necessary\ Libraries\ and\ Includes/CV
 
 ./mwt2mmf.exe: ${OBJECTFILES}
 	${MKDIR} -p .
-	${LINK.cc} -o ./mwt2mmf ${OBJECTFILES} ${LDLIBSOPTIONS} 
+	${LINK.cc} -static-libgcc -static-libstdc++ -o ./mwt2mmf ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
 ${OBJECTDIR}/_ext/1360890869/MWT_Library.o: ../DLL/MWT_Library.cc 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1360890869

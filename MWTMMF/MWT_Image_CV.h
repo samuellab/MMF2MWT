@@ -3,6 +3,9 @@
  * Author: Marc
  *
  * Created on January 30, 2012, 2:13 PM
+ * (C) Marc Gershow; licensed under the Creative Commons Attribution Share Alike 3.0 United States License.
+ * To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/us/ or send a letter to
+ * Creative Commons, 171 Second Street, Suite 300, San Francisco, California, 94105, USA.
  */
 
 #include "MWT_Geometry.h"
@@ -12,7 +15,15 @@
 #ifndef MWT_IMAGE_CV_H
 #define	MWT_IMAGE_CV_H
 
-
+/* MWT_Image_CV extends Image (found in MWT_Image.h) to allow
+ * translation between IplImage and Image
+ *
+ * no additional data fields are defined
+ * most methods are also available as static equivalents
+ * e.g.
+ * MWT_Image_CV (const IplImage *src)
+ * static Image IplImageToMWTImage(const IplImage *src)
+ */
 class MWT_Image_CV : public Image {
 public:
 
