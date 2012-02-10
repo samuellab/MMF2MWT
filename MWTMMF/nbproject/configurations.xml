@@ -48,7 +48,7 @@
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
-    <conf name="Debug" type="1">
+    <conf name="Windows" type="1">
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>MinGW|MinGW</compilerSet>
@@ -119,6 +119,60 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
+      </compileType>
+    </conf>
+    <conf name="Linux" type="1">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>default</compilerSet>
+        <rebuildPropChanged>true</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <incDir>
+            <pElem>../DLL</pElem>
+            <pElem>../Image-Stack-Compressor</pElem>
+            <pElem>../Image-Stack-Compressor/Necessary Libraries and Includes/CV/headers</pElem>
+            <pElem>../yaml-cpp/include/</pElem>
+          </incDir>
+          <commandLine>-static-libgcc -static-libstdc++</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>./WindowsBinaries/mwt2mmf</output>
+          <linkerAddLib>
+            <pElem>../Image-Stack-Compressor/Necessary Libraries and Includes/CV/linuxlib</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../Image-Stack-Compressor"
+                            CT="3"
+                            CN="linux"
+                            AC="false"
+                            BL="true"
+                            WD="../Image-Stack-Compressor"
+                            BC="${MAKE}  -f Makefile CONF=linux"
+                            CC="${MAKE}  -f Makefile CONF=linux clean"
+                            OP="LinuxBinaries/image_stack_compressor.lib">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibLibItem>cv</linkerLibLibItem>
+            <linkerLibLibItem>cxcore</linkerLibLibItem>
+            <linkerLibLibItem>highgui</linkerLibLibItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../yaml-cpp"
+                            CT="3"
+                            CN="Linux"
+                            AC="false"
+                            BL="true"
+                            WD="../yaml-cpp"
+                            BC="${MAKE}  -f Makefile CONF=Linux"
+                            CC="${MAKE}  -f Makefile CONF=Linux clean"
+                            OP="./LinuxBinaries/libyaml-cpp.lib">
+              </makeArtifact>
+            </linkerLibProjectItem>
+          </linkerLibItems>
+          <commandLine>-static-libgcc -static-libstdc++</commandLine>
+        </linkerTool>
       </compileType>
     </conf>
   </confs>

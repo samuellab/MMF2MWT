@@ -65,15 +65,12 @@ This code comes as a git module with submodules.  One of the submodules also has
 To get all of the code, using the git shell:
 
 git clone git@github.com:samuellab/MMF2MWT.git
-git submodule init
-git submodule update
-cd Image-Stack-Compressor
-git submodule init
-git submodule update
+cd MMF2MWT.git
+git submodule update --init --recursive
 
-This code has a netbeans project (in MWTMMF/nbroject) configured for Windows32 and mingw.  Netbeans and help installing it for your platform are available from netbeans.org
+This code has a netbeans project (in MWTMMF/nbroject) configured for Windows32 and mingw and for Linux and g++.  It requires Netbeans 7.1 with the c++ package. Netbeans and help installing it for your platform are available from netbeans.org
 
-The file mwt2mmf.exe is a compiled windows command line program, which should work on any modern windows system.
+The file MWTMMF/WindowsBinaries/mwt2mmf.exe is a compiled windows command line program, which should work on any modern windows system.
 
 -----
 LICENSE
