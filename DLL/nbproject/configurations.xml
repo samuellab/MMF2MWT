@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="69">
-  <logicalFolder name="root" displayName="root" projectFiles="true">
+<configurationDescriptor version="80">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df name="DLL" root=".">
       <in>MWT_Blob.cc</in>
       <in>MWT_Blob.h</in>
@@ -10,8 +10,6 @@
       <in>MWT_Geometry.h</in>
       <in>MWT_Image.cc</in>
       <in>MWT_Image.h</in>
-      <in>MWT_Image_CV.cpp</in>
-      <in>MWT_Image_CV.h</in>
       <in>MWT_Library.cc</in>
       <in>MWT_Library.h</in>
       <in>MWT_Lists.cc</in>
@@ -36,30 +34,29 @@
   <confs>
     <conf name="Default" type="0">
       <toolsSet>
-        <developmentServer>localhost</developmentServer>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>MinGW|MinGW</compilerSet>
-        <platform>3</platform>
       </toolsSet>
       <makefileType>
         <makeTool>
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
-          <buildCommand>$(MAKE) -f Makefile</buildCommand>
-          <cleanCommand>$(MAKE) -f Makefile clean</cleanCommand>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
           <executablePath></executablePath>
           <ccTool>
             <incDir>
               <pElem>.</pElem>
             </incDir>
             <preprocessorList>
-              <Elem>WINDOWS</Elem>
               <Elem>UNIT_TEST_OWNER</Elem>
+              <Elem>WINDOWS</Elem>
             </preprocessorList>
           </ccTool>
         </makeTool>
       </makefileType>
-      <item path="MWT_DLL.cc" ex="true" tool="1">
+      <item path="MWT_DLL.cc" ex="true" tool="1" flavor="0">
       </item>
-      <item path="MWT_DLL.h" ex="true" tool="3">
+      <item path="MWT_DLL.h" ex="true" tool="3" flavor="0">
       </item>
     </conf>
   </confs>

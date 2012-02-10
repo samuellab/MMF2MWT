@@ -87,13 +87,13 @@
             <linkerLibProjectItem>
               <makeArtifact PL="../yaml-cpp"
                             CT="3"
-                            CN="Debug"
+                            CN="Windows"
                             AC="true"
-                            BL="false"
+                            BL="true"
                             WD="../yaml-cpp"
-                            BC="${MAKE}  -f Makefile CONF=Debug"
-                            CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="./libyaml-cpp.lib">
+                            BC="${MAKE}  -f Makefile CONF=Windows"
+                            CC="${MAKE}  -f Makefile CONF=Windows clean"
+                            OP="./WindowsBinaries/libyaml-cpp.lib">
               </makeArtifact>
             </linkerLibProjectItem>
           </linkerLibItems>
