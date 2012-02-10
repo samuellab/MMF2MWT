@@ -16,9 +16,9 @@ CND_PACKAGE_NAME_Release=mwtmmf.tar
 CND_PACKAGE_PATH_Release=dist/Release/MinGW-Windows/package/mwtmmf.tar
 # Linux configuration
 CND_PLATFORM_Linux=GNU-Linux-x86
-CND_ARTIFACT_DIR_Linux=./WindowsBinaries
+CND_ARTIFACT_DIR_Linux=./LinuxBinaries
 CND_ARTIFACT_NAME_Linux=mwt2mmf
-CND_ARTIFACT_PATH_Linux=./WindowsBinaries/mwt2mmf
+CND_ARTIFACT_PATH_Linux=./LinuxBinaries/mwt2mmf
 CND_PACKAGE_DIR_Linux=dist/Linux/GNU-Linux-x86/package
 CND_PACKAGE_NAME_Linux=mwtmmf.tar
 CND_PACKAGE_PATH_Linux=dist/Linux/GNU-Linux-x86/package/mwtmmf.tar

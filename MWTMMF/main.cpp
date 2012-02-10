@@ -59,7 +59,7 @@ int runProgram (int argc, char **argv) {
     }
     MMF_MWT_Processor mp;
     bool defaultbatch;
-    if (p.batchname.empty()) {
+    if (defaultbatch = p.batchname.empty()) { //single = sign is correct
         p.batchname = string(defaultSettingsFile);
     }
     ifstream ifs(p.batchname.c_str());

@@ -138,7 +138,7 @@
           <commandLine>-static-libgcc -static-libstdc++</commandLine>
         </ccTool>
         <linkerTool>
-          <output>./WindowsBinaries/mwt2mmf</output>
+          <output>./LinuxBinaries/mwt2mmf</output>
           <linkerAddLib>
             <pElem>../Image-Stack-Compressor/Necessary Libraries and Includes/CV/linuxlib</pElem>
           </linkerAddLib>
