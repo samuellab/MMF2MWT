@@ -9,9 +9,10 @@ TOP=`pwd`
 CND_PLATFORM=MinGW-Windows
 CND_CONF=Debug
 CND_DISTDIR=dist
-NBTMPDIR=build/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
+CND_BUILDDIR=build
+NBTMPDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=./mwt2mmf
+OUTPUT_PATH=./WindowsBinaries/mwt2mmf
 OUTPUT_BASENAME=mwt2mmf
 PACKAGE_TOP_DIR=mwtmmf/
 

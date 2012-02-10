@@ -17,19 +17,20 @@ RANLIB=ranlib
 CC=gcc.exe
 CCC=g++.exe
 CXX=g++.exe
-FC=
+FC=gfortran
 AS=as.exe
 
 # Macros
 CND_PLATFORM=MinGW-Windows
 CND_CONF=Debug
 CND_DISTDIR=dist
+CND_BUILDDIR=build
 
 # Include project Makefile
 include Makefile
 
 # Object Directory
-OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
+OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
@@ -60,19 +61,19 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L../Image-Stack-Compressor/Necessary\ Libraries\ and\ Includes/CV/lib ../Image-Stack-Compressor/image_stack_compressor.lib -lcv -lcxcore -lhighgui ../yaml-cpp/./libyaml-cpp.lib
+LDLIBSOPTIONS=-L../Image-Stack-Compressor/Necessary\ Libraries\ and\ Includes/CV/lib ../Image-Stack-Compressor/WindowsBinaries/image_stack_compressor.lib -lcv -lcxcore -lhighgui ../yaml-cpp/./libyaml-cpp.lib
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-Debug.mk ./mwt2mmf.exe
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ./WindowsBinaries/mwt2mmf.exe
 
-./mwt2mmf.exe: ../Image-Stack-Compressor/image_stack_compressor.lib
+./WindowsBinaries/mwt2mmf.exe: ../Image-Stack-Compressor/WindowsBinaries/image_stack_compressor.lib
 
-./mwt2mmf.exe: ../yaml-cpp/./libyaml-cpp.lib
+./WindowsBinaries/mwt2mmf.exe: ../yaml-cpp/./libyaml-cpp.lib
 
-./mwt2mmf.exe: ${OBJECTFILES}
-	${MKDIR} -p .
-	${LINK.cc} -static-libgcc -static-libstdc++ -o ./mwt2mmf ${OBJECTFILES} ${LDLIBSOPTIONS} 
+./WindowsBinaries/mwt2mmf.exe: ${OBJECTFILES}
+	${MKDIR} -p ./WindowsBinaries
+	${LINK.cc} -static-libgcc -static-libstdc++ -o ./WindowsBinaries/mwt2mmf ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
 ${OBJECTDIR}/_ext/1360890869/MWT_Library.o: ../DLL/MWT_Library.cc 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1360890869
@@ -131,14 +132,16 @@ ${OBJECTDIR}/MWT_Image_CV.o: MWT_Image_CV.cpp
 
 # Subprojects
 .build-subprojects:
+	cd ../Image-Stack-Compressor && ${MAKE}  -f Makefile CONF=Windows
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
-	${RM} -r build/Debug
-	${RM} ./mwt2mmf.exe
+	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
+	${RM} ./WindowsBinaries/mwt2mmf.exe
 
 # Subprojects
 .clean-subprojects:
+	cd ../Image-Stack-Compressor && ${MAKE}  -f Makefile CONF=Windows clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl
