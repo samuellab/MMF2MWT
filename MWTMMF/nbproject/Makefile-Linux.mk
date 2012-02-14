@@ -65,15 +65,15 @@ LDLIBSOPTIONS=-L../Image-Stack-Compressor/Necessary\ Libraries\ and\ Includes/CV
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ./LinuxBinaries/mwt2mmf
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ./LinuxBinaries/mmf2mwt.exe
 
-./LinuxBinaries/mwt2mmf: ../Image-Stack-Compressor/LinuxBinaries/image_stack_compressor.lib
+./LinuxBinaries/mmf2mwt.exe: ../Image-Stack-Compressor/LinuxBinaries/image_stack_compressor.lib
 
-./LinuxBinaries/mwt2mmf: ../yaml-cpp/./LinuxBinaries/libyaml-cpp.lib
+./LinuxBinaries/mmf2mwt.exe: ../yaml-cpp/./LinuxBinaries/libyaml-cpp.lib
 
-./LinuxBinaries/mwt2mmf: ${OBJECTFILES}
+./LinuxBinaries/mmf2mwt.exe: ${OBJECTFILES}
 	${MKDIR} -p ./LinuxBinaries
-	${LINK.cc} -static-libgcc -static-libstdc++ -o ./LinuxBinaries/mwt2mmf ${OBJECTFILES} ${LDLIBSOPTIONS} 
+	${LINK.cc} -static-libgcc -static-libstdc++ -o ./LinuxBinaries/mmf2mwt.exe ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
 ${OBJECTDIR}/_ext/1360890869/MWT_Library.o: nbproject/Makefile-${CND_CONF}.mk ../DLL/MWT_Library.cc 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1360890869
@@ -138,7 +138,7 @@ ${OBJECTDIR}/MWT_Image_CV.o: nbproject/Makefile-${CND_CONF}.mk MWT_Image_CV.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ./LinuxBinaries/mwt2mmf
+	${RM} ./LinuxBinaries/mmf2mwt.exe
 
 # Subprojects
 .clean-subprojects:
