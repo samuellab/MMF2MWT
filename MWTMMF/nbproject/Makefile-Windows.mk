@@ -65,15 +65,15 @@ LDLIBSOPTIONS=-L../Image-Stack-Compressor/Necessary\ Libraries\ and\ Includes/CV
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ./WindowsBinaries/mwt2mmf.exe
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ./WindowsBinaries/mmf2mwt.exe
 
-./WindowsBinaries/mwt2mmf.exe: ../Image-Stack-Compressor/WindowsBinaries/image_stack_compressor.lib
+./WindowsBinaries/mmf2mwt.exe: ../Image-Stack-Compressor/WindowsBinaries/image_stack_compressor.lib
 
-./WindowsBinaries/mwt2mmf.exe: ../yaml-cpp/./WindowsBinaries/libyaml-cpp.lib
+./WindowsBinaries/mmf2mwt.exe: ../yaml-cpp/./WindowsBinaries/libyaml-cpp.lib
 
-./WindowsBinaries/mwt2mmf.exe: ${OBJECTFILES}
+./WindowsBinaries/mmf2mwt.exe: ${OBJECTFILES}
 	${MKDIR} -p ./WindowsBinaries
-	${LINK.cc} -static-libgcc -static-libstdc++ -o ./WindowsBinaries/mwt2mmf ${OBJECTFILES} ${LDLIBSOPTIONS} 
+	${LINK.cc} -static-libgcc -static-libstdc++ -o ./WindowsBinaries/mmf2mwt ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
 ${OBJECTDIR}/_ext/1360890869/MWT_Library.o: ../DLL/MWT_Library.cc 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1360890869
@@ -138,7 +138,7 @@ ${OBJECTDIR}/MWT_Image_CV.o: MWT_Image_CV.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ./WindowsBinaries/mwt2mmf.exe
+	${RM} ./WindowsBinaries/mmf2mwt.exe
 
 # Subprojects
 .clean-subprojects:

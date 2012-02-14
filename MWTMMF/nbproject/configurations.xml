@@ -64,7 +64,7 @@
           <commandLine>-DWINDOWS -static-libgcc -static-libstdc++</commandLine>
         </ccTool>
         <linkerTool>
-          <output>./WindowsBinaries/mwt2mmf</output>
+          <output>./WindowsBinaries/mmf2mwt</output>
           <linkerAddLib>
             <pElem>../Image-Stack-Compressor/Necessary Libraries and Includes/CV/lib</pElem>
           </linkerAddLib>
@@ -138,7 +138,7 @@
           <commandLine>-static-libgcc -static-libstdc++</commandLine>
         </ccTool>
         <linkerTool>
-          <output>./LinuxBinaries/mwt2mmf</output>
+          <output>./LinuxBinaries/mmf2mwt.exe</output>
           <linkerAddLib>
             <pElem>../Image-Stack-Compressor/Necessary Libraries and Includes/CV/linuxlib</pElem>
           </linkerAddLib>

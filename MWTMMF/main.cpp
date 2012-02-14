@@ -41,7 +41,7 @@ int runProgram (int argc, char **argv);
 void badargs (ParamsT &p, int argc, char **argv);
 
 #define defaultSettingsFile "defaultMWTSettings.txt"
-#define programName "mwt2mmf"
+#define programName "mmf2mwt"
 
 int main(int argc, char** argv) {
 

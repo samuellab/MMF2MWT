@@ -9,8 +9,8 @@ CND_DISTDIR=dist
 # Windows configuration
 CND_PLATFORM_Windows=MinGW-Windows
 CND_ARTIFACT_DIR_Windows=./WindowsBinaries
-CND_ARTIFACT_NAME_Windows=mwt2mmf
-CND_ARTIFACT_PATH_Windows=./WindowsBinaries/mwt2mmf
+CND_ARTIFACT_NAME_Windows=mmf2mwt
+CND_ARTIFACT_PATH_Windows=./WindowsBinaries/mmf2mwt
 CND_PACKAGE_DIR_Windows=dist/Windows/MinGW-Windows/package
 CND_PACKAGE_NAME_Windows=mwtmmf.tar
 CND_PACKAGE_PATH_Windows=dist/Windows/MinGW-Windows/package/mwtmmf.tar
