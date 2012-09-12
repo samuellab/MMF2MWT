@@ -38,11 +38,11 @@ int MMF_MWT_Processor::process(const char* mmf_filename, const char* output_path
 
   vector<string> allmmfs = MultiStackReader::parseFileNameInput(mmf_filename);
   if (allmmfs.empty()) {
-      cout << "could not parse input file name set correctly" << endl;
+      cout << "could not parse input file name set correctly" << endl << endl;
       return -1;
   }
   string outpath = allmmfs[0];
-  cout << "first mmf name = " << outpath << endl;
+  cout << "first mmf name = " << outpath << endl << endl;
   size_t ind = outpath.find_last_of("/\\");
   string outname = outpath.substr(ind+1);
   outpath = outpath.substr(0,ind + 1);
@@ -65,7 +65,7 @@ int MMF_MWT_Processor::process(const char* mmf_filename, const char* output_path
   a_library.setSubtractionImageCorrectionAlgorithm(h1);
   a_library.setCombineBlobs(h1,true);
 
-  logstream << "processing " << mmf_filename << endl << "with these settings: " << endl << *this << endl;
+  logstream << "processing " << mmf_filename << endl << "with these settings: " << endl << *this << endl << endl;
 
   MultiStackReader sr(mmf_filename);
   if (sr.isError()) {
@@ -142,6 +142,7 @@ int MMF_MWT_Processor::process(const char* mmf_filename, const char* output_path
   endFrame = endFrame < 0 ? sr.getTotalFrames() : endFrame + 1;
   endFrame = endFrame > sr.getTotalFrames() ? sr.getTotalFrames() : endFrame;
   
+  logstream << "startFrame = " << startFrame << "; endFrame = " << endFrame << endl << endl;
 
   for (int j=startFrame;j < endFrame;j++)
   {
@@ -149,6 +150,15 @@ int MMF_MWT_Processor::process(const char* mmf_filename, const char* output_path
 
       tim.tic("load frame");
       sr.getFrame(j, &src);
+      if (sr.isError()) {
+          logstream << "frame #" << j << ":  error in stack reader! " << endl << sr.getError() << endl << endl;
+          return 26;
+      }
+      if (src == NULL) {
+          logstream << "failed to load frame # " << j << endl;
+          return 27;
+      }
+      
       tim.toc("load frame");
 
       tim.tic("convertTo16S");
