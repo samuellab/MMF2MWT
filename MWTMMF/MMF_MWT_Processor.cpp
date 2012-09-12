@@ -16,7 +16,7 @@
 #include "MWT_Library.h"
 #include "tictoc/tictoc.h"
 #include "MWT_Image_CV.h"
-#include "StackReader.h"
+#include "MultiStackReader.h"
 #include "MMF_MWT_Processor.h"
 #include "highgui.h"
 #include "cv.h"
@@ -36,8 +36,13 @@ int MMF_MWT_Processor::process(const char* mmf_filename, const char* output_path
   int i;
   int h1 = a_library.getNewHandle();
 
-  
-  string outpath(mmf_filename);
+  vector<string> allmmfs = MultiStackReader::parseFileNameInput(mmf_filename);
+  if (allmmfs.empty()) {
+      cout << "could not parse input file name set correctly" << endl;
+      return -1;
+  }
+  string outpath = allmmfs[0];
+  cout << "first mmf name = " << outpath << endl;
   size_t ind = outpath.find_last_of("/\\");
   string outname = outpath.substr(ind+1);
   outpath = outpath.substr(0,ind + 1);
@@ -62,7 +67,7 @@ int MMF_MWT_Processor::process(const char* mmf_filename, const char* output_path
 
   logstream << "processing " << mmf_filename << endl << "with these settings: " << endl << *this << endl;
 
-  StackReader sr(mmf_filename);
+  MultiStackReader sr(mmf_filename);
   if (sr.isError()) {
       logstream << "Failed to load: " << mmf_filename << endl << "Error: " << sr.getError() << endl;
       return 1;

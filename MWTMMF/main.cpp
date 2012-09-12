@@ -44,8 +44,7 @@ void badargs (ParamsT &p, int argc, char **argv);
 #define programName "mmf2mwt"
 
 int main(int argc, char** argv) {
-
-    
+   
     return runProgram(argc, argv);
     //return testCVConversion();
     //return testMMF_MWT_Processor();
@@ -97,6 +96,10 @@ void badargs (ParamsT &p, int argc, char **argv) {
 }
 int parseArguments (int argc, char **argv, ParamsT &p) {
     p.valid = false;
+    cout <<  "nargs = " << argc << endl << "args are: ";
+    for (int j = 0; j < argc; ++j) {
+        cout << argv[j] << endl;
+    }
     switch (argc) {
         case 0:
             cout << "argc = 0; this should never happen!";
