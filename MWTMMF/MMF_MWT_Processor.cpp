@@ -78,6 +78,7 @@ int MMF_MWT_Processor::process(const char* mmf_filename, const char* output_path
       logstream << "Error reading from: " << mmf_filename << endl << "Error: " << sr.getError() << endl;
       return 2;
   }
+
   int imbits = 8;
   
   i = a_library.setImageInfo(h1,imbits,sz.width,sz.height); if (i!=h1) return 3;
@@ -88,7 +89,8 @@ int MMF_MWT_Processor::process(const char* mmf_filename, const char* output_path
 
     
   i = a_library.setOutput(h1,output_path == NULL ? outpath.c_str() : output_path, output_prefix == NULL ? outname.c_str() : output_prefix,true,false,false); if (i!=h1) return 4;
-
+  
+  
   i = a_library.setDancerBorderSize(h1,dancerBorderSize);
   short gray = 1<<a_library.getBitDepth(h1);
 
@@ -108,6 +110,28 @@ int MMF_MWT_Processor::process(const char* mmf_filename, const char* output_path
   i = a_library.setUpdateBandNumber(h1,updateBandNumber); if (i!=h1) return 21;
   i = a_library.setVelocityIntegrationTime(h1,1.0); if (i!=h1) return 22;
 
+  TrackerEntry* te = a_library.all_trackers[h1];
+  if (te==NULL) {
+      logstream << "h1 points to null handle in tracker library" << endl;
+      return -1;  
+  }
+  const char *base_directory = te->performance.base_directory;
+  const char *prefix = te->prefix_string;
+  #ifdef _WIN32
+    const char sep = '\\';
+  #else
+    const char sep = '/';
+  #endif
+  stringstream mdatname;
+  mdatname << (base_directory) << sep << (prefix) << ".mdat";
+  logstream << "creating meta data file: " << mdatname.str() << endl << endl;
+  sr.createSupplementalDataFile(mdatname.str().c_str());
+  if (sr.isError()) {
+      logstream << "Error creating meta data file: " << mdatname.str() << endl << "Error: " << sr.getError() << endl;
+      return 23;
+  }
+  logstream << "meta data saved!" << endl;
+  
   IplImage *src = NULL;
   IplImage *src16 = NULL;
 
